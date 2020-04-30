@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Channel } from './Channel.js';
+
+// todo create separate file.
+const data = [
+  { id: 1, name: "First" },
+  { id: 2, name: "Second" },
+  { id: 3, name: "Third" },
+  { id: 4, name: "Fourth" },
+  { id: 5, name: "Fifth" }
+];
+
 
 function App() {
+  const [isHovered, setIsHovered] = useState(true);
+  const [channels, setChannels] = useState(null);
+
+  setTimeout(() => {
+    setChannels(data);
+  }, 1000);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header className="App-header" onMouseEnter={() => setIsHovered(!isHovered)} onMouseLeave={() => setIsHovered(!isHovered)}>
+        {isHovered ?
+          <p>Welcome </p> :
+          <p>Hey </p>
+        }
       </header>
-    </div>
+
+      <main>
+        {channels
+          ? (<ul className='nobull'>
+              {channels.map((item) => <Channel channel={item} key={item.id} />)}
+            </ul>)
+          : 'Loading'
+        }
+
+      </main>
+    </>
   );
 }
+
+
 
 export default App;
